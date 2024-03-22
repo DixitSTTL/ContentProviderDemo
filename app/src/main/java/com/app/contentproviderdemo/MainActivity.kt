@@ -9,6 +9,7 @@ import com.app.climate_trace.businesslogic.interfaces.GeneralClickListeners
 import com.app.contentproviderdemo.databinding.ActivityMainBinding
 import com.app.contentproviderdemo.views.activity.ActivityCallLogs
 import com.app.contentproviderdemo.views.activity.ActivityContacts
+import com.app.contentproviderdemo.views.activity.ActivitySMS
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -25,13 +26,12 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.callLogBtn -> {
                     startActivity(Intent(this@MainActivity, ActivityCallLogs::class.java))
-
                 }
-                R.id.smsBtn -> {
 
+                R.id.smsBtn -> {
+                    startActivity(Intent(this@MainActivity, ActivitySMS::class.java))
                 }
             }
-
 
         }
     }

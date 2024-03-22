@@ -27,7 +27,6 @@ class ActivityCallLogs : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_call_logs)
         mBinding =
             DataBindingUtil.setContentView(this@ActivityCallLogs, R.layout.activity_call_logs)
         mViewModel = ViewModelProvider(this@ActivityCallLogs)[ViewModelCallLogs::class.java]

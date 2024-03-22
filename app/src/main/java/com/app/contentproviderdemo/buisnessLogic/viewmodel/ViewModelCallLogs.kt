@@ -9,8 +9,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.Date
 import javax.inject.Inject
 
 
@@ -23,7 +21,7 @@ class ViewModelCallLogs @Inject constructor() : BaseViewModel() {
     fun fetchCallLogs() {
 
         CoroutineScope(Dispatchers.IO).launch {
-            var list = ArrayList<PojoCallLogs>()
+            val list = ArrayList<PojoCallLogs>()
             val contentResolver = mApplication!!.contentResolver
             val projection = arrayOf(
                 CallLog.Calls.NUMBER,
@@ -38,39 +36,28 @@ class ViewModelCallLogs @Inject constructor() : BaseViewModel() {
 
             cursor?.let {
                 if (it.count > 0) {
+                    val num_column=cursor.getColumnIndex(CallLog.Calls.NUMBER)
+                    val name_column=cursor.getColumnIndex(CallLog.Calls.CACHED_NAME)
+                    val call_date_column=cursor.getColumnIndex(CallLog.Calls.DATE)
+                    val duration_column=cursor.getColumnIndex(CallLog.Calls.DURATION)
+                    val type_column=cursor.getColumnIndex(CallLog.Calls.TYPE)
+
                     while (it.moveToNext()) {
-                        val number = cursor.getString(cursor.getColumnIndex(CallLog.Calls.NUMBER))
-                        val name =
-                            cursor.getString(cursor.getColumnIndex(CallLog.Calls.CACHED_NAME))
-                        val call_date =
-                            cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DATE))
-                        val duration = cursor.getLong(cursor.getColumnIndex(CallLog.Calls.DURATION))
-                        val type = cursor.getInt(cursor.getColumnIndex(CallLog.Calls.TYPE))
-                        var call_type = when (type) {
-                            1 -> {
-                                "Incoming"
-                            }
 
-                            2 -> {
-                                "Outgoing"
-                            }
+                        val number = cursor.getString(num_column)
+                        val name = cursor.getString(name_column)
+                        val call_date = cursor.getLong(call_date_column)
+                        val duration = cursor.getLong(duration_column)
+                        val type = cursor.getInt(type_column)
 
-                            else -> {
-                                "MissCalled"
-                            }
+                        val call_type = when (type) {
+                            1 -> { "Incoming" }
+                            2 -> { "Outgoing" }
+                            else -> { "MissCalled" }
                         }
 
-
-                        val newdate = Date(call_date)
-
                         list.add(
-                            PojoCallLogs(
-                                name,
-                                number,
-                                call_date,
-                                duration,
-                                call_type
-                            )
+                            PojoCallLogs(name, number, call_date, duration, call_type)
                         )
 
                     }

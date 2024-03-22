@@ -10,27 +10,25 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.contentproviderdemo.R
-import com.app.contentproviderdemo.buisnessLogic.viewmodel.ViewModelContact
-import com.app.contentproviderdemo.databinding.ActivityContactsBinding
-import com.app.contentproviderdemo.views.adapter.AdapterContacts
+import com.app.contentproviderdemo.buisnessLogic.viewmodel.ViewModelSMS
+import com.app.contentproviderdemo.databinding.ActivitySmsBinding
+import com.app.contentproviderdemo.views.adapter.AdapterSMS
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ActivityContacts : AppCompatActivity() {
+class ActivitySMS : AppCompatActivity() {
+    private val READ_SMS_PERMISSION_CODE = 101
 
-    private val READ_CONTACTS_PERMISSION_CODE = 101
+    lateinit var mBinding: ActivitySmsBinding
 
-    lateinit var mBinding: ActivityContactsBinding
+    lateinit var mViewModel: ViewModelSMS
 
-    lateinit var mViewModel: ViewModelContact
-
-    val mAdapter: AdapterContacts = AdapterContacts()
-
-
+    val mAdapter: AdapterSMS = AdapterSMS()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this@ActivityContacts, R.layout.activity_contacts)
-        mViewModel = ViewModelProvider(this)[ViewModelContact::class.java]
+        mBinding =
+            DataBindingUtil.setContentView(this@ActivitySMS, R.layout.activity_sms)
+        mViewModel = ViewModelProvider(this@ActivitySMS)[ViewModelSMS::class.java]
 
         _init()
         initObserver()
@@ -38,20 +36,19 @@ class ActivityContacts : AppCompatActivity() {
     }
 
     private fun initObserver() {
-        mViewModel.contactList.observe(this, {
+        mViewModel.smsList.observe(this, {
+            Log.d("ggbgbg","bgbgb")
             mAdapter.setList(it)
 
-
         })
-
 
     }
 
     private fun _init() {
 
-        mBinding.recContacts.layoutManager =
+        mBinding.recSMS.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        mBinding.recContacts.adapter = mAdapter
+        mBinding.recSMS.adapter = mAdapter
 
     }
 
@@ -59,16 +56,16 @@ class ActivityContacts : AppCompatActivity() {
     private fun checkPermission() {
         if (ContextCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.READ_CONTACTS
+                android.Manifest.permission.READ_SMS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.READ_CONTACTS),
-                READ_CONTACTS_PERMISSION_CODE
+                arrayOf(android.Manifest.permission.READ_SMS),
+                READ_SMS_PERMISSION_CODE
             )
         } else {
-            mViewModel.fetchContacts()
+            mViewModel.fetchAllSMS()
         }
 
     }
@@ -79,9 +76,9 @@ class ActivityContacts : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == READ_CONTACTS_PERMISSION_CODE) {
+        if (requestCode == READ_SMS_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mViewModel.fetchContacts()
+                mViewModel.fetchAllSMS()
             }
         }
     }

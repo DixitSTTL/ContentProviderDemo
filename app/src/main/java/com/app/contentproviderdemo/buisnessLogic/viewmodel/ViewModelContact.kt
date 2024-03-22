@@ -3,7 +3,9 @@ package com.app.contentproviderdemo.buisnessLogic.viewmodel
 import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.net.Uri
+import android.provider.CallLog
 import android.provider.ContactsContract
+import android.provider.Telephony
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -26,38 +28,27 @@ class ViewModelContact @Inject constructor() : BaseViewModel() {
         CoroutineScope(Dispatchers.IO).launch {
             var list = ArrayList<PojoContacts>()
             val contentResolver: ContentResolver = mApplication!!.contentResolver
+            val projection = arrayOf(
+                ContactsContract.Contacts.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER
+            )
             val cursor = contentResolver.query(
-                Uri.parse("content://com.android.contacts/contacts"), null, null, null, null
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI, projection, null, null, ContactsContract.CommonDataKinds.Phone.SORT_KEY_PRIMARY
             )
 
             cursor?.let {
                 if (it.count > 0) {
+                    val name_column=cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
+                    val num_column=cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+
                     while (it.moveToNext()) {
                         val contactName =
-                            it.getString(it.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
-                        val contactId =
-                            it.getString(it.getColumnIndex(ContactsContract.Contacts._ID))
+                            it.getString(name_column)
+                        val contactNumber =
+                            it.getString(num_column)
 
-                        // Fetching phone numbers
-                        val phoneCursor = contentResolver.query(
-                            Uri.parse("content://com.android.contacts/data/phones"),
-                            null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                            arrayOf(contactId),
-                            null
-                        )
-                        phoneCursor?.let { phoneCursor ->
-                            if (phoneCursor.moveToFirst()) {
-                                val phoneNumber = phoneCursor.getString(
-                                    phoneCursor.getColumnIndex(
-                                        ContactsContract.CommonDataKinds.Phone.NUMBER
-                                    )
-                                )
-                                list.add(PojoContacts(contactName, phoneNumber))
+                        list.add(PojoContacts(contactName, contactNumber))
 
-                            }
-                            phoneCursor.close()
-                        }
                     }
                     withContext(Dispatchers.Main){
 
