@@ -57,6 +57,13 @@
                 android:layout_marginTop="12dp"
                 android:onClick="@{(v)->generalClickListeners.onClick(v)}"
                 android:text="Sms" />
+            <Button
+                android:id="@+id/addUserBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:onClick="@{(v)->generalClickListeners.onClick(v)}"
+                android:text="Add User" />
         </LinearLayout>
 
 

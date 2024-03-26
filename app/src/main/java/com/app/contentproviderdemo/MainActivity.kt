@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.app.climate_trace.businesslogic.interfaces.GeneralClickListeners
 import com.app.contentproviderdemo.databinding.ActivityMainBinding
+import com.app.contentproviderdemo.views.activity.ActivityAddUser
 import com.app.contentproviderdemo.views.activity.ActivityCallLogs
 import com.app.contentproviderdemo.views.activity.ActivityContacts
 import com.app.contentproviderdemo.views.activity.ActivitySMS
@@ -30,6 +31,10 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.smsBtn -> {
                     startActivity(Intent(this@MainActivity, ActivitySMS::class.java))
+                }
+
+                R.id.addUserBtn -> {
+                    startActivity(Intent(this@MainActivity, ActivityAddUser::class.java))
                 }
             }
 
