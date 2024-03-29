@@ -20,7 +20,16 @@
             android:layout_height="wrap_content"
             android:title="Contacts"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/totalCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginRight="20dp"
+                android:text="0" />
+        </Toolbar>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recContacts"

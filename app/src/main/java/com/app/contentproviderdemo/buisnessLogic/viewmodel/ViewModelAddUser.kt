@@ -32,15 +32,19 @@ class ViewModelAddUser @Inject constructor() : BaseViewModel() {
             value.put("name", observerName.get())
             value.put("department", observerDepartment.get())
             // inserting into database through content URI
-            val cursor = contentResolver.insert(
-                Uri.parse("content://$PROVIDER_NAME/users"),
-                value
-            )
+            try {
+                val resultUri = contentResolver.insert(
+                    Uri.parse("content://$PROVIDER_NAME/users"),
+                    value
+                )
 
-            if (cursor != null) {
-                observerName.set("")
-                observerDepartment.set("")
+                if (resultUri != null) {
+                    observerName.set("")
+                    observerDepartment.set("")
+                }
+            } catch (_: Exception) {
             }
+
         }
     }
 

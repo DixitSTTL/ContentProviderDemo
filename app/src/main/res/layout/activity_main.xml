@@ -62,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:backgroundTint="#5DBF72"
                 android:onClick="@{(v)->generalClickListeners.onClick(v)}"
                 android:text="Add User" />
         </LinearLayout>
