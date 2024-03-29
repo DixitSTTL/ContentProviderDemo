@@ -34,11 +34,9 @@ class ActivityAddUser : AppCompatActivity() {
     val generalItemClickListeners = object : GeneralItemClickListeners {
         override fun onItemClick(view: View?, position: Int, item: Any?) {
             val model = item as UserModel
-            if( model!=null){
-                mViewModel.delete(model)
-                mViewModel.fetchUsers()
+            mViewModel.delete(model)
+            mViewModel.fetchUsers()
 
-            }
         }
     }
     val mAdapter: AdapterUser = AdapterUser(generalItemClickListeners)

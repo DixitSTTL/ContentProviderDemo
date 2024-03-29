@@ -7,47 +7,46 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.app.contentproviderdemo.R
-import com.app.contentproviderdemo.buisnessLogic.viewmodel.ViewModelSMS
-import com.app.contentproviderdemo.databinding.ActivitySmsBinding
-import com.app.contentproviderdemo.views.adapter.AdapterSMS
+import com.app.contentproviderdemo.buisnessLogic.viewmodel.ViewModelImages
+import com.app.contentproviderdemo.databinding.ActivityImagesBinding
+import com.app.contentproviderdemo.views.adapter.AdapterImages
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ActivitySMS : AppCompatActivity() {
-    private val READ_SMS_PERMISSION_CODE = 101
+class ActivityImages : AppCompatActivity() {
+    private val READ_IMAGES_PERMISSION_CODE = 101
 
-    lateinit var mBinding: ActivitySmsBinding
-
-    lateinit var mViewModel: ViewModelSMS
-
-    val mAdapter: AdapterSMS = AdapterSMS()
+    private lateinit var mBinding: ActivityImagesBinding
+    private lateinit var mViewModel: ViewModelImages
+    private val mAdapter = AdapterImages()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mBinding =
-            DataBindingUtil.setContentView(this@ActivitySMS, R.layout.activity_sms)
-        mViewModel = ViewModelProvider(this@ActivitySMS)[ViewModelSMS::class.java]
+        mBinding = DataBindingUtil.setContentView(this@ActivityImages, R.layout.activity_images)
+        mViewModel = ViewModelProvider(this@ActivityImages).get(ViewModelImages::class.java)
 
         _init()
         initObserver()
         checkPermission()
+//        mViewModel.fetchImages()
     }
 
     private fun initObserver() {
-        mViewModel.smsList.observe(this) {
+        mViewModel.imageList.observe(this) {
             mAdapter.setList(it)
             mBinding.totalCount.text = it.size.toString()
 
         }
 
+
     }
 
     private fun _init() {
 
-        mBinding.recSMS.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        mBinding.recSMS.adapter = mAdapter
+        mBinding.recImages.layoutManager =
+            GridLayoutManager(this, 2)
+        mBinding.recImages.adapter = mAdapter
 
     }
 
@@ -55,16 +54,16 @@ class ActivitySMS : AppCompatActivity() {
     private fun checkPermission() {
         if (ContextCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.READ_SMS
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.READ_SMS),
-                READ_SMS_PERMISSION_CODE
+                arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                READ_IMAGES_PERMISSION_CODE
             )
         } else {
-            mViewModel.fetchAllSMS()
+            mViewModel.fetchImages()
         }
 
     }
@@ -75,9 +74,9 @@ class ActivitySMS : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == READ_SMS_PERMISSION_CODE) {
+        if (requestCode == READ_IMAGES_PERMISSION_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                mViewModel.fetchAllSMS()
+                mViewModel.fetchImages()
             }
         }
     }

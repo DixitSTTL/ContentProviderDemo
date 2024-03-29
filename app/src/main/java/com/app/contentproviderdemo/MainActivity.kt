@@ -10,6 +10,7 @@ import com.app.contentproviderdemo.databinding.ActivityMainBinding
 import com.app.contentproviderdemo.views.activity.ActivityAddUser
 import com.app.contentproviderdemo.views.activity.ActivityCallLogs
 import com.app.contentproviderdemo.views.activity.ActivityContacts
+import com.app.contentproviderdemo.views.activity.ActivityImages
 import com.app.contentproviderdemo.views.activity.ActivitySMS
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,6 +36,10 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.addUserBtn -> {
                     startActivity(Intent(this@MainActivity, ActivityAddUser::class.java))
+                }
+
+                R.id.imagesBtn -> {
+                    startActivity(Intent(this@MainActivity, ActivityImages::class.java))
                 }
             }
 

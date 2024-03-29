@@ -1,12 +1,9 @@
 package com.app.contentproviderdemo.views.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.contentproviderdemo.buisnessLogic.pojo.PojoContacts
 import com.app.contentproviderdemo.buisnessLogic.pojo.PojoSMS
-import com.app.contentproviderdemo.databinding.ItemLayoutContactsBinding
 import com.app.contentproviderdemo.databinding.ItemLayoutSmsBinding
 
 class AdapterSMS : RecyclerView.Adapter<AdapterSMS.ViewHolder>() {

@@ -36,11 +36,11 @@ class ViewModelCallLogs @Inject constructor() : BaseViewModel() {
 
             cursor?.let {
                 if (it.count > 0) {
-                    val num_column=cursor.getColumnIndex(CallLog.Calls.NUMBER)
-                    val name_column=cursor.getColumnIndex(CallLog.Calls.CACHED_NAME)
-                    val call_date_column=cursor.getColumnIndex(CallLog.Calls.DATE)
-                    val duration_column=cursor.getColumnIndex(CallLog.Calls.DURATION)
-                    val type_column=cursor.getColumnIndex(CallLog.Calls.TYPE)
+                    val num_column = cursor.getColumnIndex(CallLog.Calls.NUMBER)
+                    val name_column = cursor.getColumnIndex(CallLog.Calls.CACHED_NAME)
+                    val call_date_column = cursor.getColumnIndex(CallLog.Calls.DATE)
+                    val duration_column = cursor.getColumnIndex(CallLog.Calls.DURATION)
+                    val type_column = cursor.getColumnIndex(CallLog.Calls.TYPE)
 
                     while (it.moveToNext()) {
 
@@ -51,9 +51,17 @@ class ViewModelCallLogs @Inject constructor() : BaseViewModel() {
                         val type = cursor.getInt(type_column)
 
                         val call_type = when (type) {
-                            1 -> { "Incoming" }
-                            2 -> { "Outgoing" }
-                            else -> { "MissCalled" }
+                            1 -> {
+                                "Incoming"
+                            }
+
+                            2 -> {
+                                "Outgoing"
+                            }
+
+                            else -> {
+                                "MissCalled"
+                            }
                         }
 
                         list.add(

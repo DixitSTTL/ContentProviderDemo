@@ -2,7 +2,6 @@ package com.app.contentproviderdemo.views.activity
 
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -41,7 +40,7 @@ class ActivityContacts : AppCompatActivity() {
         mViewModel.contactList.observe(this, {
             mAdapter.setList(it)
 
-
+            mBinding.totalCount.text = it.size.toString()
         })
 
 

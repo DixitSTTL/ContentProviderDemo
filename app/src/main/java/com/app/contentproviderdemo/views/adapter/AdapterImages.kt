@@ -3,16 +3,16 @@ package com.app.contentproviderdemo.views.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.app.contentproviderdemo.buisnessLogic.pojo.PojoCallLogs
-import com.app.contentproviderdemo.databinding.ItemLayoutCallLogsBinding
+import com.app.contentproviderdemo.buisnessLogic.pojo.PojoImages
+import com.app.contentproviderdemo.databinding.ItemLayoutImagesBinding
 
-class AdapterCallLogs : RecyclerView.Adapter<AdapterCallLogs.ViewHolder>() {
+class AdapterImages : RecyclerView.Adapter<AdapterImages.ViewHolder>() {
 
-    var dataList = ArrayList<PojoCallLogs>()
+    var dataList = ArrayList<PojoImages>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val mBinding =
-            ItemLayoutCallLogsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ItemLayoutImagesBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(mBinding)
 
     }
@@ -25,12 +25,12 @@ class AdapterCallLogs : RecyclerView.Adapter<AdapterCallLogs.ViewHolder>() {
         holder.bind()
     }
 
-    fun setList(it: ArrayList<PojoCallLogs>?) {
+    fun setList(it: ArrayList<PojoImages>?) {
         dataList.addAll(it!!)
         notifyDataSetChanged()
     }
 
-    inner class ViewHolder(var mBinding: ItemLayoutCallLogsBinding) :
+    inner class ViewHolder(var mBinding: ItemLayoutImagesBinding) :
 
         RecyclerView.ViewHolder(mBinding.root) {
 
