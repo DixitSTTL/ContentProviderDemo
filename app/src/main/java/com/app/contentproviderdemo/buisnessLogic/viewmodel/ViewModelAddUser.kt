@@ -21,7 +21,6 @@ class ViewModelAddUser @Inject constructor() : BaseViewModel() {
     var observerDepartment = ObservableField<String>("")
 
     var userList = MutableLiveData<ArrayList<UserModel>>()
-    var observeRefreshing = MutableLiveData<Boolean>()
 
     @SuppressLint("Range")
     fun addUser() {
@@ -73,9 +72,6 @@ class ViewModelAddUser @Inject constructor() : BaseViewModel() {
                             UserModel(id, name, department)
                         )
 
-                    }
-                    withContext(Dispatchers.Main) {
-                        userList.value = list
                     }
 
                 }

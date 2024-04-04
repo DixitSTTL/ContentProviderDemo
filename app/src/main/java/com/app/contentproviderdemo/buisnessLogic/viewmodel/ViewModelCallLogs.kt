@@ -69,14 +69,16 @@ class ViewModelCallLogs @Inject constructor() : BaseViewModel() {
                         )
 
                     }
-                    withContext(Dispatchers.Main) {
 
-                        callLogList.value = list
-                    }
+                }
+                withContext(Dispatchers.Main) {
 
+                    callLogList.value = list
                 }
                 it.close()
             }
+            observeRefreshing.postValue(false)
+
         }
 
     }

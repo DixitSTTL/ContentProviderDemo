@@ -41,13 +41,23 @@ class ActivitySMS : AppCompatActivity() {
 
         }
 
+        mViewModel.observeRefreshing.observe(this) {
+            mBinding.swipeRefresh.isRefreshing = it
+        }
     }
 
     private fun _init() {
 
-        mBinding.recSMS.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        mBinding.recSMS.adapter = mAdapter
+        mBinding.apply {
+            recSMS.layoutManager =
+                LinearLayoutManager(this@ActivitySMS, LinearLayoutManager.VERTICAL, false)
+            recSMS.adapter = mAdapter
+            swipeRefresh.setOnRefreshListener {
+                mViewModel.observeRefreshing.postValue(true)
+                mViewModel.fetchAllSMS()
+
+            }
+        }
 
     }
 

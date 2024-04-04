@@ -59,8 +59,8 @@
                     tools:text="number" />
 
                 <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="@null"
                     android:onClick="@{(v)->generalItemClickListeners.onItemClick(v,position,model)}"
                     android:src="@drawable/baseline_delete_24"

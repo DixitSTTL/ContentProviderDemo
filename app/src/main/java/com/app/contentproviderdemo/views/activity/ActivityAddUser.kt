@@ -1,8 +1,11 @@
 package com.app.contentproviderdemo.views.activity
 
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ActivityAddUser : AppCompatActivity() {
+    private val PERMISSION_CODE = 101
 
     lateinit var mBinding: ActivityAddUserBinding
     lateinit var mViewModel: ViewModelAddUser
@@ -62,8 +66,25 @@ class ActivityAddUser : AppCompatActivity() {
 
         _init()
         observer()
-        getContent()
+        checkPermission()
 
+
+    }
+
+    private fun checkPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                "com.demo.user.provider.PERMISSION_WRITE_DATA"
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf("com.demo.user.provider.PERMISSION_WRITE_DATA"),
+                PERMISSION_CODE
+            )
+        } else {
+            mViewModel.fetchUsers()
+        }
 
     }
 
@@ -77,9 +98,6 @@ class ActivityAddUser : AppCompatActivity() {
 
     }
 
-    private fun getContent() {
-        mViewModel.fetchUsers()
-    }
 
     private fun _init() {
         mBinding.apply {

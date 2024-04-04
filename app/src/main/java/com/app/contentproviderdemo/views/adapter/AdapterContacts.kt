@@ -26,7 +26,7 @@ class AdapterContacts : RecyclerView.Adapter<AdapterContacts.ViewHolder>() {
     }
 
     fun setList(it: ArrayList<PojoContacts>?) {
-        dataList.addAll(it!!)
+        dataList= it!!
         notifyDataSetChanged()
     }
 

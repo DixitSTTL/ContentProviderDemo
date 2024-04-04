@@ -26,7 +26,7 @@ class AdapterSMS : RecyclerView.Adapter<AdapterSMS.ViewHolder>() {
     }
 
     fun setList(it: ArrayList<PojoSMS>?) {
-        dataList.addAll(it!!)
+        dataList= it!!
         notifyDataSetChanged()
     }
 

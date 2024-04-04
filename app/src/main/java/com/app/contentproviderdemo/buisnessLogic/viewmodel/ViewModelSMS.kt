@@ -59,13 +59,15 @@ class ViewModelSMS @Inject constructor() : BaseViewModel() {
                         list.add(PojoSMS(smsType, address, date, body))
 
                     }
-                    withContext(Dispatchers.Main) {
-                        smsList.value = list
-                    }
 
+                }
+                withContext(Dispatchers.Main) {
+                    smsList.value = list
                 }
                 it.close()
             }
+            observeRefreshing.postValue(false)
+
         }
 
     }

@@ -26,7 +26,7 @@ class AdapterCallLogs : RecyclerView.Adapter<AdapterCallLogs.ViewHolder>() {
     }
 
     fun setList(it: ArrayList<PojoCallLogs>?) {
-        dataList.addAll(it!!)
+        dataList= it!!
         notifyDataSetChanged()
     }
 

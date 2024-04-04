@@ -51,12 +51,15 @@ class ViewModelContact @Inject constructor() : BaseViewModel() {
                         list.add(PojoContacts(contactName, contactNumber))
 
                     }
-                    withContext(Dispatchers.Main) {
-                        contactList.value = list
-                    }
                 }
+                withContext(Dispatchers.Main) {
+                    contactList.value = list
+                }
+
                 it.close()
             }
+            observeRefreshing.postValue(false)
+
         }
     }
 

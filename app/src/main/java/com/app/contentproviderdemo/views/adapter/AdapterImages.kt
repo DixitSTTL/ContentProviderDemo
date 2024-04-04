@@ -26,7 +26,7 @@ class AdapterImages : RecyclerView.Adapter<AdapterImages.ViewHolder>() {
     }
 
     fun setList(it: ArrayList<PojoImages>?) {
-        dataList.addAll(it!!)
+        dataList= it!!
         notifyDataSetChanged()
     }
 

@@ -1,5 +1,6 @@
 package com.app.contentproviderdemo.buisnessLogic.viewmodel
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.app.contentproviderdemo.MyApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,6 +12,8 @@ open class BaseViewModel @Inject constructor() : ViewModel() {
     @JvmField
     @Inject
     var mApplication: MyApplication? = null
+
+    var observeRefreshing = MutableLiveData<Boolean>()
 
 
 }

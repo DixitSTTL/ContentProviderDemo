@@ -37,20 +37,29 @@ class ActivityContacts : AppCompatActivity() {
     }
 
     private fun initObserver() {
-        mViewModel.contactList.observe(this, {
+        mViewModel.contactList.observe(this) {
             mAdapter.setList(it)
-
             mBinding.totalCount.text = it.size.toString()
-        })
 
+        }
+
+        mViewModel.observeRefreshing.observe(this) {
+            mBinding.swipeRefresh.isRefreshing = it
+        }
 
     }
 
     private fun _init() {
+        mBinding.apply {
+            recContacts.layoutManager =
+                LinearLayoutManager(this@ActivityContacts, LinearLayoutManager.VERTICAL, false)
+            recContacts.adapter = mAdapter
+            swipeRefresh.setOnRefreshListener {
+                mViewModel.observeRefreshing.postValue(true)
+                mViewModel.fetchContacts()
 
-        mBinding.recContacts.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        mBinding.recContacts.adapter = mAdapter
+            }
+        }
 
     }
 

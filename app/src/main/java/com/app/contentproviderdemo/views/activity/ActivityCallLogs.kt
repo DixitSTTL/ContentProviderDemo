@@ -42,15 +42,25 @@ class ActivityCallLogs : AppCompatActivity() {
             mBinding.totalCount.text = it.size.toString()
 
         }
+        mViewModel.observeRefreshing.observe(this) {
+            mBinding.swipeRefresh.isRefreshing = it
+        }
 
 
     }
 
     private fun _init() {
 
-        mBinding.recCallLogs.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        mBinding.recCallLogs.adapter = mAdapter
+        mBinding.apply {
+            recCallLogs.layoutManager =
+                LinearLayoutManager(this@ActivityCallLogs, LinearLayoutManager.VERTICAL, false)
+            recCallLogs.adapter = mAdapter
+            swipeRefresh.setOnRefreshListener {
+                mViewModel.observeRefreshing.postValue(true)
+                mViewModel.fetchCallLogs()
+
+            }
+        }
 
     }
 
