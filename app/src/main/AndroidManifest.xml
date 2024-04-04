@@ -10,17 +10,18 @@
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="com.demo.user.provider.PERMISSION_READ_DATA" />
     <uses-permission android:name="com.demo.user.provider.PERMISSION_WRITE_DATA" />
 
     <queries>
-        <package android:name="com.app.providerdatabase" />
         <package android:name="com.app.providerdatabase" />
     </queries>
 
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
+        android:installLocation="preferExternal"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"

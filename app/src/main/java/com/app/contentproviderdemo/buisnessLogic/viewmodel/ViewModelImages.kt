@@ -26,11 +26,11 @@ class ViewModelImages @Inject constructor() : BaseViewModel() {
                 MediaStore.Images.Media.RESOLUTION,
                 MediaStore.Images.Media._ID
             )
-            val orderBy = MediaStore.Images.Media._ID;
+            val orderBy = MediaStore.Images.Media.DATE_MODIFIED + " DESC";
 
 
             val cursor = contentResolver.query(
-                MediaStore.Images.Media.INTERNAL_CONTENT_URI,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 null,
                 null,
                 null,
@@ -45,22 +45,24 @@ class ViewModelImages @Inject constructor() : BaseViewModel() {
                         cursor.getColumnIndex(MediaStore.Images.Media.DATA)
                     val id_column =
                         cursor.getColumnIndex(MediaStore.Images.Media._ID)
-                    val resolution_column =
-                        cursor.getColumnIndex(MediaStore.Images.Media.RESOLUTION)
+                    val height_column =
+                        cursor.getColumnIndex(MediaStore.Images.Media.HEIGHT)
+                    val width_column =
+                        cursor.getColumnIndex(MediaStore.Images.Media.WIDTH)
                     val size_column =
                         cursor.getColumnIndex(MediaStore.Images.Media.SIZE)
-
 
                     while (it.moveToNext()) {
                         val contactData = it.getString(data_column)
                         val contactId = it.getString(id_column)
-                        val resolution = it.getString(resolution_column)
+                        val height = it.getString(height_column)
+                        val width = it.getString(width_column)
                         val size = it.getLong(size_column)
                         list.add(
                             PojoImages(
                                 uri = contactData,
                                 id = contactId,
-                                resolution = resolution,
+                                resolution = "$height X $width",
                                 size = size
                             )
                         )

@@ -1,6 +1,8 @@
 package com.app.contentproviderdemo.views.activity
 
 import android.content.pm.PackageManager
+import android.os.Build
+import android.os.Build.VERSION_CODES.TIRAMISU
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -52,19 +54,37 @@ class ActivityImages : AppCompatActivity() {
 
 
     private fun checkPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
-                READ_IMAGES_PERMISSION_CODE
-            )
+        if (Build.VERSION.SDK_INT >= TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.READ_MEDIA_IMAGES
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES),
+                    READ_IMAGES_PERMISSION_CODE
+                )
+            } else {
+                mViewModel.fetchImages()
+            }
+
         } else {
-            mViewModel.fetchImages()
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                    READ_IMAGES_PERMISSION_CODE
+                )
+            } else {
+                mViewModel.fetchImages()
+            }
         }
+
 
     }
 
